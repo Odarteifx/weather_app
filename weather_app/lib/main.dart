@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'pages/weather.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -32,6 +34,8 @@ class WeatherHome extends StatefulWidget {
 class _WeatherHomeState extends State<WeatherHome> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const WeatherUi();
   }
 }
+
+
