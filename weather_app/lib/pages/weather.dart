@@ -10,6 +10,8 @@ class WeatherUi extends StatefulWidget {
 class _WeatherUiState extends State<WeatherUi> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return const Scaffold(
+      backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+    );
   }
 }
