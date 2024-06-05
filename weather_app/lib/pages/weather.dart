@@ -19,8 +19,9 @@ class _WeatherUiState extends State<WeatherUi> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
          Container(
-          decoration: const BoxDecoration(
-            color: Colors.white
+          decoration:  BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20)
           ),
           padding: const EdgeInsets.all(20),
           height: 147,
