@@ -24,7 +24,7 @@ class _WeatherUiState extends State<WeatherUi> {
             borderRadius: BorderRadius.circular(20)
           ),
           padding: const EdgeInsets.all(20),
-          height: 147,
+          height: 290,
           width: 390,
           child: const Row(
             children: [
@@ -35,7 +35,7 @@ class _WeatherUiState extends State<WeatherUi> {
                   Text('Accra, Ghana'),
                   Text('24th Jun')
                 ],
-              )
+              ), 
             ],
           ),
          )
