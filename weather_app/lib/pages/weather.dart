@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapi/weatherapi.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class WeatherUi extends StatefulWidget {
   const WeatherUi({super.key});
@@ -7,7 +8,9 @@ class WeatherUi extends StatefulWidget {
   @override
   State<WeatherUi> createState() => _WeatherUiState();
 }
-WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606');
+WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
+String cityName = 'Accra';
+RealtimeWeather rw = await wr.getRealtimeWeatherByCityName(cityName);
 
 class _WeatherUiState extends State<WeatherUi> {
   @override
@@ -34,9 +37,10 @@ class _WeatherUiState extends State<WeatherUi> {
                 children: [
                   Text('Today'),
                   Text('Accra, Ghana'),
-                  Text('24th Jun')
+                  Text('24th Jun'),
                 ],
               ), 
+              
             ],
           ),
          )
