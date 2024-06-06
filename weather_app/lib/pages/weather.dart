@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:weatherapi/weatherapi.dart';
 
 class WeatherUi extends StatefulWidget {
   const WeatherUi({super.key});
@@ -7,6 +7,7 @@ class WeatherUi extends StatefulWidget {
   @override
   State<WeatherUi> createState() => _WeatherUiState();
 }
+WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606');
 
 class _WeatherUiState extends State<WeatherUi> {
   @override
