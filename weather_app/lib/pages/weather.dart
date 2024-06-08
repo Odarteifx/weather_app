@@ -18,6 +18,7 @@ int monthnum = now.month - 1;
 String day = now.day.toString();
 WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
 String cityName = 'Accra';
+String country = 'Ghana';
 //RealtimeWeather rw = await wr.getRealtimeWeatherByCityName(cityName);
 
 class _WeatherUiState extends State<WeatherUi> {
@@ -30,45 +31,85 @@ class _WeatherUiState extends State<WeatherUi> {
        child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-         Container(
-          decoration:  BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20)
-          ),
-          padding: const EdgeInsets.all(20),
-          height: 290,
-          width: 390,
-          child: Row(
-            children: [
-              Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Today',
-                    style: GoogleFonts.poppins(
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal,
-                      color: const Color(0xFF666666),
-                    ),
-                    ),
-                  Text(
-                    '$cityName, ${cityName}',
-                    style: GoogleFonts.poppins(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500
-                    ),
-                    ),
-                  Text('$day ${month[monthnum]}'),
-                ],
-              ), 
-              
-            ],
-          ),
-         )
+         weatherTile(cityName),
         ],
         
        ),
       ),
     );
   }
+}
+
+Widget weatherTile(cityName){
+return Container(
+  width: 400,
+  height: 300,
+  decoration: const BoxDecoration(
+    color: Colors.white,
+  ),
+  child: Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+    child: Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Today',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xFF828282),
+                  ),
+                  ),
+                Text(
+                  '$cityName, $country',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFF333333)
+                  ),
+                  ),
+                Text(
+                  '${month[monthnum]} $day | Condition',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xFF828282),
+                  ),
+                  )
+              ],
+            ),
+            const FlutterLogo( size: 80,),
+          ],
+        ),
+        //change to fit temperature
+        Text(
+          '26°',
+          style: GoogleFonts.poppins(
+            fontSize: 80,
+            fontWeight: FontWeight.w500,
+          ),
+          ),
+          const Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('H:32°'),
+                SizedBox(width: 20,),
+                Text('L:24°')
+              ],
+            ),
+          )
+
+      ],
+    ),
+  ),
+
+);
 }
