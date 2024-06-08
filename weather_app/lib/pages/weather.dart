@@ -10,37 +10,75 @@ class WeatherUi extends StatefulWidget {
   State<WeatherUi> createState() => _WeatherUiState();
 }
 
-List month = ['Jan', 'Feb', 'Mar', 'April', 'May', 'Jun', 'Jul',
-'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+List month = [
+  'Jan', 'Feb', 'Mar', 'April', 'May', 'Jun', 
+  'Jul','Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ];
 DateTime now = DateTime.now();
-int monthnum = now.month - 1;
-String day = now.day.toString();
-WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
-String cityName = 'Accra';
-String country = 'Ghana';
-//RealtimeWeather rw = await wr.getRealtimeWeatherByCityName(cityName);
+late final int monthnum;
+late final String day ;
 
 class _WeatherUiState extends State<WeatherUi> {
+
+WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
+late final String cityName = 'London';
+  
+
+RealtimeWeather? weatherData;
+bool isloading = true;
+//RealtimeWeather rw = await wr.getRealtimeWeatherByCityName(cityName);
+@override
+  void initState() {
+    super.initState();
+    monthnum = now.month - 1;
+    day = now.day.toString();  
+   fetchWeather();
+  }
+
+  Future fetchWeather() async{
+    try {
+      final weather = await wr.getRealtimeWeatherByCityName(cityName);
+      setState(() {
+        weatherData = weather;
+        isloading = false;
+      });
+    } catch(error) {
+      setState(() {
+        isloading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
 
       body: SafeArea(
-       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-         weatherTile(cityName),
-        ],
-        
-       ),
+       child: isloading ? const Center(
+        child: CircularProgressIndicator()
+        ) : 
+        weatherData != null ?
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            weatherTile(weatherData)
+          ],
+        ) : 
+         Center(
+          child: Text(
+            'Failed to load weather data',
+            style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color:const Color(0xFF828282)
+                  ),
+          ),)
       ),
     );
   }
 }
 
-Widget weatherTile(cityName){
+Widget weatherTile(weather){
 return Container(
   width: 400,
   height: 300,
@@ -80,7 +118,7 @@ return Container(
                       ),
                       ),
                     Text(
-                      '$cityName, $country',
+                      '${weather.location.name}, ${weather.location.country}',
                       style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -88,7 +126,7 @@ return Container(
                       ),
                       ),
                     Text(
-                      '${month[monthnum]} $day | Mostly Cloudy',
+                      '${month[monthnum]} $day | ${weather.current.condition.text.toString()}',
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -100,14 +138,14 @@ return Container(
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                child:  FlutterLogo( size: 80,),
+                child: FlutterLogo(size: 80,),
               ),
             ],
           ),
         ),
         //change to fit temperature
         Text(
-          '26°',
+          '${weather.current.tempC.toStringAsFixed(1)}°',
           style: GoogleFonts.poppins(
             fontSize: 80,
             fontWeight: FontWeight.w500,
@@ -126,7 +164,7 @@ return Container(
                   ),
                   ),
                 const SizedBox(width: 20,),
-                Text('L:24°',
+                Text('L:34°',
                  style: GoogleFonts.poppins(
                     fontSize: 20,
                     color:const Color(0xFF828282)
