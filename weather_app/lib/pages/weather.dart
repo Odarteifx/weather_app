@@ -21,7 +21,7 @@ late final String day ;
 class _WeatherUiState extends State<WeatherUi> {
 
 WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
-late final String cityName = 'London';
+late final String cityName = 'Miami';
   
 
 RealtimeWeather? weatherData;
@@ -118,7 +118,7 @@ return Container(
                       ),
                       ),
                     Text(
-                      '${weather.location.name}, ${weather.location.country}',
+                      '${weather.location.name}',
                       style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
