@@ -21,7 +21,7 @@ late final String day ;
 class _WeatherUiState extends State<WeatherUi> {
 
 WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
-late final String cityName = 'Accra';
+late final String cityName = 'Austin';
   
 
 RealtimeWeather? weatherData;
@@ -233,6 +233,8 @@ Widget forecastTile(weather, weather2){
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+
+                //Now condition
                 Text(
                   'Now',
                   style: GoogleFonts.poppins(
@@ -248,7 +250,7 @@ Widget forecastTile(weather, weather2){
                   fit: BoxFit.contain,
                   ),
                 Text(
-                  '${weather2.current.tempC}',
+                  '${weather2.current.tempC.toStringAsFixed(0)}°',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -259,6 +261,7 @@ Widget forecastTile(weather, weather2){
             ),
           ),
 
+          // +1 hour
           SizedBox(
             width: 65,
             child: Column(
@@ -273,13 +276,13 @@ Widget forecastTile(weather, weather2){
                   ),
                 ),
                 Image.network(
-                  'https:${weather2.forecast[0].hour[8].condition.icon}',
+                  'https:${weather2.forecast[0].hour[((currentTime + 1)%24)].condition.icon}',
                   width: 65,
                   height: 65,
                   fit: BoxFit.contain,
                   ),
                 Text(
-                  '${weather2.forecast[0].hour[8].tempC}',
+                  '${weather2.forecast[0].hour[((currentTime + 1)%24)].tempC.toStringAsFixed(0)}°',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -290,6 +293,7 @@ Widget forecastTile(weather, weather2){
             ),
           ),
 
+          //+2 hour
           SizedBox(
             width: 65,
             child: Column(
@@ -304,13 +308,13 @@ Widget forecastTile(weather, weather2){
                   ),
                 ),
                 Image.network(
-                  'https:${weather2.current.condition.icon}',
+                  'https:${weather2.forecast[0].hour[((currentTime + 2)%24)].condition.icon}',
                   width: 65,
                   height: 65,
                   fit: BoxFit.contain,
                   ),
                 Text(
-                  '${weather2.current.tempC}',
+                  '${weather2.forecast[0].hour[((currentTime + 2)%24)].tempC.toStringAsFixed(0)}°',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -320,7 +324,8 @@ Widget forecastTile(weather, weather2){
               ],
             ),
           ),
-
+          
+          //+3 hour
           SizedBox(
             width: 65,
             child: Column(
@@ -335,13 +340,13 @@ Widget forecastTile(weather, weather2){
                   ),
                 ),
                 Image.network(
-                  'https:${weather2.current.condition.icon}',
+                  'https:${weather2.forecast[0].hour[((currentTime + 3)%24)].condition.icon}',
                   width: 65,
                   height: 65,
                   fit: BoxFit.contain,
                   ),
                 Text(
-                  '${weather2.current.tempC}',
+                  '${weather2.forecast[0].hour[((currentTime + 3)%24)].tempC.toStringAsFixed(0)}°',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -351,7 +356,8 @@ Widget forecastTile(weather, weather2){
               ],
             ),
           ),
-          
+
+          //+4 hour
           SizedBox(
             width: 65,
             child: Column(
@@ -366,13 +372,13 @@ Widget forecastTile(weather, weather2){
                   ),
                 ),
                 Image.network(
-                  'https:${weather2.current.condition.icon}',
+                  'https:${weather2.forecast[0].hour[((currentTime + 4)%24)].condition.icon}',
                   width: 65,
                   height: 65,
                   fit: BoxFit.contain,
                   ),
                 Text(
-                  '${weather2.current.tempC}',
+                  '${weather2.forecast[0].hour[((currentTime + 4)%24)].tempC.toStringAsFixed(0)}°',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
