@@ -21,7 +21,7 @@ late final String day ;
 class _WeatherUiState extends State<WeatherUi> {
 
 WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
-late final String cityName = 'Paris';
+late final String cityName = 'Accra';
   
 
 RealtimeWeather? weatherData;
@@ -265,7 +265,7 @@ Widget forecastTile(weather, weather2){
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  (currentTime + 1).toString(),
+                  ((currentTime + 1)%24).toString().padLeft(2,'0'),
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -296,7 +296,7 @@ Widget forecastTile(weather, weather2){
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  (currentTime + 2).toString(),
+                  ((currentTime + 2)%24).toString().padLeft(2,'0'),
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -327,7 +327,7 @@ Widget forecastTile(weather, weather2){
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                   (currentTime + 3).toString(),
+                   ((currentTime + 3)%24).toString().padLeft(2,'0'),
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -358,7 +358,7 @@ Widget forecastTile(weather, weather2){
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                   (currentTime + 4).toString(),
+                   ((currentTime + 4)% 24).toString().padLeft(2,'0'),
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
