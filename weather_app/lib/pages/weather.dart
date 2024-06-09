@@ -21,7 +21,7 @@ late final String day ;
 class _WeatherUiState extends State<WeatherUi> {
 
 WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
-late final String cityName = 'Sunyani';
+late final String cityName = 'Kumasi';
   
 
 RealtimeWeather? weatherData;
@@ -79,10 +79,10 @@ bool isloading = true;
 }
 
 Widget weatherTile(weather){
-  String weathData = '${month[monthnum]} $day | ${weather.current.condition.text.toString()}';
+  String weathData = '${month[monthnum]} $day | ${weather.current.condition.text}';
 return Container(
   width: 400,
-  height: 300,
+  height: 350,
   decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
@@ -106,8 +106,9 @@ return Container(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                child: Expanded(
+                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+                child:  SizedBox(
+                  width: 185,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -129,6 +130,7 @@ return Container(
                         ),
                       Text(
                         weathData,
+                        softWrap: true,
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
@@ -143,6 +145,7 @@ return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
                 child: Image.network(
                   'https:${weather.current.condition.icon}',
+                  alignment: Alignment.centerRight,
                   width: 80,
                   height: 80,
                   ),
@@ -152,7 +155,7 @@ return Container(
         ),
         //change to fit temperature
         Text(
-          '${weather.current.tempC.toStringAsFixed(1)}°',
+          '${weather.current.tempC.toStringAsFixed(0)}°',
           style: GoogleFonts.poppins(
             fontSize: 80,
             fontWeight: FontWeight.w500,
