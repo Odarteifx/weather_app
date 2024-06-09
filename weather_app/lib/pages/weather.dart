@@ -21,10 +21,11 @@ late final String day ;
 class _WeatherUiState extends State<WeatherUi> {
 
 WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
-late final String cityName = 'Tokyo';
+late final String cityName = 'Paris';
   
 
 RealtimeWeather? weatherData;
+ForecastWeather? weatherFore;
 bool isloading = true;
 //RealtimeWeather rw = await wr.getRealtimeWeatherByCityName(cityName);
 @override
@@ -38,8 +39,10 @@ bool isloading = true;
   Future fetchWeather() async{
     try {
       final weather = await wr.getRealtimeWeatherByCityName(cityName);
+      final weather2 = await wr.getForecastWeatherByCityName(cityName);
       setState(() {
         weatherData = weather;
+        weatherFore = weather2;
         isloading = false;
       });
     } catch(error) {
@@ -54,18 +57,18 @@ bool isloading = true;
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
 
-      body: SingleChildScrollView(
+      body: isloading ? const Center(
+          child: CircularProgressIndicator()
+          ) :  SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: SafeArea(
-         child: isloading ? const Center(
-          child: CircularProgressIndicator()
-          ) : 
+         child: 
           weatherData != null ?
           Center(
             child: Column(
               children: [
-                weatherTile(weatherData),
-                const Text('data'),
+                weatherTile(weatherData, weatherFore),
+                forecastTile(weatherData, weatherFore),
               ],
             ),
           ) : 
@@ -83,7 +86,7 @@ bool isloading = true;
   }
 }
 
-Widget weatherTile(weather){
+Widget weatherTile(weather,weather2){
   String weathData = '${month[monthnum]} $day | ${weather.current.condition.text}';
 return Padding(
   padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 17),
@@ -175,14 +178,14 @@ return Padding(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'H:32°',
+                    'H:${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
                     style: GoogleFonts.poppins(
                       fontSize: 20,
                       color:const Color(0xFF828282)
                     ),
                     ),
                   const SizedBox(width: 20,),
-                  Text('L:34°',
+                  Text('L:${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
                    style: GoogleFonts.poppins(
                       fontSize: 20,
                       color:const Color(0xFF828282)
@@ -199,4 +202,188 @@ return Padding(
   
   ),
 );
+}
+
+Widget forecastTile(weather, weather2){
+
+  DateTime currentTimestring = DateTime.parse(weather.location.localtime);
+  int currentTime = currentTimestring.hour;
+ 
+
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 17),
+    child: Container(
+      height: 160,
+      decoration: BoxDecoration(
+       color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+          offset: Offset(0, 1),
+          blurRadius: 1,
+          color: Color.fromRGBO(0, 0, 0, 0.2),
+        )
+        ],
+      ),
+      child:   Row(
+       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          SizedBox(
+            width: 65,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Now',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 65,
+                  height: 65,
+                  fit: BoxFit.contain,
+                  ),
+                Text(
+                  '${weather2.current.tempC}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                )
+              ],
+            ),
+          ),
+
+          SizedBox(
+            width: 65,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  (currentTime + 1).toString(),
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.forecast[0].hour[8].condition.icon}',
+                  width: 65,
+                  height: 65,
+                  fit: BoxFit.contain,
+                  ),
+                Text(
+                  '${weather2.forecast[0].hour[8].tempC}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                )
+              ],
+            ),
+          ),
+
+          SizedBox(
+            width: 65,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  (currentTime + 2).toString(),
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 65,
+                  height: 65,
+                  fit: BoxFit.contain,
+                  ),
+                Text(
+                  '${weather2.current.tempC}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                )
+              ],
+            ),
+          ),
+
+          SizedBox(
+            width: 65,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                   (currentTime + 3).toString(),
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 65,
+                  height: 65,
+                  fit: BoxFit.contain,
+                  ),
+                Text(
+                  '${weather2.current.tempC}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                )
+              ],
+            ),
+          ),
+          
+          SizedBox(
+            width: 65,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                   (currentTime + 4).toString(),
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 65,
+                  height: 65,
+                  fit: BoxFit.contain,
+                  ),
+                Text(
+                  '${weather2.current.tempC}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                     color:const Color(0xFF666666),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      )
+  )
+  );
 }
