@@ -21,7 +21,7 @@ late final String day ;
 class _WeatherUiState extends State<WeatherUi> {
 
 WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
-late final String cityName = 'Austin';
+late final String cityName = 'Chicago';
   
 
 RealtimeWeather? weatherData;
@@ -69,6 +69,8 @@ bool isloading = true;
               children: [
                 weatherTile(weatherData, weatherFore),
                 forecastTile(weatherData, weatherFore),
+                const SizedBox(height: 17,),
+                 weekForecastTile(weatherFore),
               ],
             ),
           ) : 
@@ -391,5 +393,61 @@ Widget forecastTile(weather, weather2){
         ],
       )
   )
+  );
+}
+
+Widget weekForecastTile(weather2){
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 17),
+    child: Container(
+      height: 470,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+          offset: Offset(0, 1),
+          blurRadius: 1,
+          color: Color.fromRGBO(0, 0, 0, 0.2),
+        )
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+                  'This Week Forecasts',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: const Color(0xFF666666), 
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+            Row(
+              children: [
+                Text(
+                  'Today',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 55,
+                  height: 55,
+                  fit: BoxFit.contain,
+                  ),
+                  Text('${weather2.current.condition.text}')
+               
+              ],
+        
+            )
+          ],
+        ),
+      ),
+    ),
   );
 }
