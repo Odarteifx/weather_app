@@ -425,8 +425,10 @@ Widget weekForecastTile(weather2){
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+                const Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   'Today',
@@ -448,6 +450,14 @@ Widget weekForecastTile(weather2){
                     color: const Color(0xFF666666), 
                   ),
                 ),
+                SizedBox(
+              width: 80,
+              child: LinearProgressIndicator(
+                    value: 2/10, 
+                    backgroundColor: const Color(0xFFE0E0E0),
+                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue), 
+                  ),
+            ),
                 Text(
                     '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
                     style: GoogleFonts.poppins(
@@ -458,7 +468,9 @@ Widget weekForecastTile(weather2){
                
               ],
         
-            )
+            ),
+            const Divider(),
+            
           ],
         ),
       ),
