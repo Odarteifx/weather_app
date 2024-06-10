@@ -426,6 +426,7 @@ Widget weekForecastTile(weather2){
                   ),
                 ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                   'Today',
@@ -440,7 +441,20 @@ Widget weekForecastTile(weather2){
                   height: 55,
                   fit: BoxFit.contain,
                   ),
-                  Text('${weather2.current.condition.text}')
+                  Text(
+                    '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                Text(
+                    '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
                
               ],
         
