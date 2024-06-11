@@ -1,9 +1,8 @@
-import 'dart:math';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weatherapi/weatherapi.dart';
+import 'package:intl/intl.dart';
+
 
 
 class WeatherUi extends StatefulWidget {
@@ -24,7 +23,7 @@ late final String day ;
 class _WeatherUiState extends State<WeatherUi> {
 
 WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
-late final String cityName = 'Chicago';
+late final String cityName = 'Miami';
   
 
 RealtimeWeather? weatherData;
@@ -211,7 +210,7 @@ return Padding(
 
 Widget forecastTile(weather, weather2){
 
-  DateTime currentTimestring = DateTime.parse(weather.location.localtime);
+  DateTime currentTimestring = DateFormat('yyyy-MM-dd HH:mm').parse(weather.location.localtime);
   int currentTime = currentTimestring.hour;
  
 
