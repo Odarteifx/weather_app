@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weatherapi/weatherapi.dart';
@@ -397,6 +400,9 @@ Widget forecastTile(weather, weather2){
 }
 
 Widget weekForecastTile(weather2){
+  double dayAverage = weather2.forecast[0].day.avgtempC;
+  double dayHigh = weather2. forecast[0].day.maxtempC;
+
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 17),
     child: Container(
@@ -444,22 +450,23 @@ Widget weekForecastTile(weather2){
                   fit: BoxFit.contain,
                   ),
                   Text(
-                    '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
+                    '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
                     style: GoogleFonts.poppins(
                     fontSize: 20,
                     color: const Color(0xFF666666), 
                   ),
                 ),
-                SizedBox(
+                  SizedBox(
               width: 80,
-              child: LinearProgressIndicator(
-                    value: 2/10, 
+              child:  LinearProgressIndicator(
+                    value: dayAverage/dayHigh, 
                     backgroundColor: const Color(0xFFE0E0E0),
-                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue), 
+                    valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                    ), 
                   ),
-            ),
+          
                 Text(
-                    '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
+                    '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
                     style: GoogleFonts.poppins(
                     fontSize: 20,
                     color: const Color(0xFF666666), 
