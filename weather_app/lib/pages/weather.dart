@@ -23,11 +23,13 @@ late final String day ;
 class _WeatherUiState extends State<WeatherUi> {
 
 WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606', language: Language.english);
-late final String cityName = 'Miami';
+late final String cityName = 'Tokyo';
   
 
 RealtimeWeather? weatherData;
 ForecastWeather? weatherFore;
+
+
 bool isloading = true;
 //RealtimeWeather rw = await wr.getRealtimeWeatherByCityName(cityName);
 @override
@@ -400,12 +402,13 @@ Widget forecastTile(weather, weather2){
 
 Widget weekForecastTile(weather2){
   double dayAverage = weather2.forecast[0].day.avgtempC;
-  double dayHigh = weather2. forecast[0].day.maxtempC;
+  double dayHigh = weather2.forecast[0].day.maxtempC;
+  double dayLow = weather2.forecast[0].day.mintempC;
 
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 17),
     child: Container(
-      height: 470,
+      height: 510,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -421,6 +424,7 @@ Widget weekForecastTile(weather2){
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
                   'This Week Forecasts',
@@ -458,7 +462,7 @@ Widget weekForecastTile(weather2){
                   SizedBox(
               width: 80,
               child:  LinearProgressIndicator(
-                    value: dayAverage/dayHigh, 
+                    value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
                     backgroundColor: const Color(0xFFE0E0E0),
                     valueColor: const AlwaysStoppedAnimation(Colors.amber),
                     ), 
@@ -474,6 +478,221 @@ Widget weekForecastTile(weather2){
                
               ],
         
+            ),
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${weather2.forecast[0].day.condition.text}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 55,
+                  height: 55,
+                  fit: BoxFit.contain,
+                  ),
+                  Text(
+                    '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                  SizedBox(
+              width: 80,
+              child:  LinearProgressIndicator(
+                    value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
+                    backgroundColor: const Color(0xFFE0E0E0),
+                    valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                    ), 
+                  ),
+          
+                Text(
+                    '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),           
+              ],
+            ),
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${weather2.forecast[0].day.condition.text}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 55,
+                  height: 55,
+                  fit: BoxFit.contain,
+                  ),
+                  Text(
+                    '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                  SizedBox(
+              width: 80,
+              child:  LinearProgressIndicator(
+                    value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
+                    backgroundColor: const Color(0xFFE0E0E0),
+                    valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                    ), 
+                  ),
+          
+                Text(
+                    '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),           
+              ],
+            ),
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${weather2.forecast[0].day.condition.text}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 55,
+                  height: 55,
+                  fit: BoxFit.contain,
+                  ),
+                  Text(
+                    '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                  SizedBox(
+              width: 80,
+              child:  LinearProgressIndicator(
+                    value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
+                    backgroundColor: const Color(0xFFE0E0E0),
+                    valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                    ), 
+                  ),
+          
+                Text(
+                    '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),           
+              ],
+            ),
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${weather2.forecast[0].day.condition.text}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 55,
+                  height: 55,
+                  fit: BoxFit.contain,
+                  ),
+                  Text(
+                    '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                  SizedBox(
+              width: 80,
+              child:  LinearProgressIndicator(
+                    value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
+                    backgroundColor: const Color(0xFFE0E0E0),
+                    valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                    ), 
+                  ),
+          
+                Text(
+                    '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),           
+              ],
+            ),
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${weather2.forecast[0].day.condition.text}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                Image.network(
+                  'https:${weather2.current.condition.icon}',
+                  width: 55,
+                  height: 55,
+                  fit: BoxFit.contain,
+                  ),
+                  Text(
+                    '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),
+                  SizedBox(
+              width: 80,
+              child:  LinearProgressIndicator(
+                    value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
+                    backgroundColor: const Color(0xFFE0E0E0),
+                    valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                    ), 
+                  ),
+          
+                Text(
+                    '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
+                    style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: const Color(0xFF666666), 
+                  ),
+                ),           
+              ],
             ),
             const Divider(),
             
