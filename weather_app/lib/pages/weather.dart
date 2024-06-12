@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:weatherapi/weatherapi.dart';
 import 'package:intl/intl.dart';
 
@@ -93,8 +94,21 @@ class _WeatherUiState extends State<WeatherUi> {
                             style: GoogleFonts.poppins(
                                 fontSize: 20, color: const Color(0xFF828282)),
                           ),
-                        )),
+                        )
+                ),
             ),
+            floatingActionButton: FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: Colors.black,
+              onPressed: () {
+                
+              },
+              child: const Icon(
+                Iconsax.menu_14,
+                size: 26,
+                color: Colors.white,
+                ),
+              ),
     );
   }
 }
