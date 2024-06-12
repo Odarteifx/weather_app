@@ -29,15 +29,17 @@ late final int monthnum;
 late final String day;
 
 class _WeatherUiState extends State<WeatherUi> {
-  WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606',
-      language: Language.english);
-  late final String cityName = 'Accra';
+  WeatherRequest wr = WeatherRequest(
+    'd2c2d6e65f574c52b0d224818240606',
+      language: Language.english
+      );
+  late final String cityName = 'Tokyo';
 
   RealtimeWeather? weatherData;
   ForecastWeather? weatherFore;
 
   bool isloading = true;
-//RealtimeWeather rw = await wr.getRealtimeWeatherByCityName(cityName);
+
   @override
   void initState() {
     super.initState();
@@ -421,7 +423,7 @@ Widget weekForecastTile(weather2) {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              'This Week Forecasts',
+              '10-Day Forecast',
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 color: const Color(0xFF666666),
@@ -433,12 +435,12 @@ Widget weekForecastTile(weather2) {
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   final dateString = weather2.forecast[index].date;
-                  final date = DateTime.parse(dateString); 
+                  final date = DateTime.parse(dateString);
                   final day = weather2.forecast[index].day;
                   String fmtdate = DateFormat('E').format(date);
                   DateTime today = DateTime.now();
                   String todayfmt = DateFormat('E').format(today);
-                  
+
                   return Column(
                     children: [
                       Row(
@@ -446,8 +448,7 @@ Widget weekForecastTile(weather2) {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            todayfmt == fmtdate ? 'Today' :
-                            fmtdate,
+                            todayfmt == fmtdate ? 'Today' : fmtdate,
                             style: GoogleFonts.poppins(
                               fontSize: 20,
                               color: const Color(0xFF666666),
