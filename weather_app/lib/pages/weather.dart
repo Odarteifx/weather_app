@@ -436,13 +436,24 @@ Widget weekForecastTile(weather2) {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              '10-Day Forecast',
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                color: const Color(0xFF666666),
-                fontWeight: FontWeight.w500,
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Icon(
+                  Iconsax.calendar_1,
+                  size: 23,
+                  color:  Color(0xFF666666),
+                  ),
+                  const SizedBox(width: 5,),
+                Text(
+                  '10-Day Forecast',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: const Color(0xFF666666),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
             const Divider(),
             Expanded(
