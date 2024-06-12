@@ -31,7 +31,7 @@ late final String day;
 class _WeatherUiState extends State<WeatherUi> {
   WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606',
       language: Language.english);
-  late final String cityName = 'Miami';
+  late final String cityName = 'Accra';
 
   RealtimeWeather? weatherData;
   ForecastWeather? weatherFore;
@@ -432,8 +432,13 @@ Widget weekForecastTile(weather2) {
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  final date = weather2.forecast[index].date;
+                  final dateString = weather2.forecast[index].date;
+                  final date = DateTime.parse(dateString); 
                   final day = weather2.forecast[index].day;
+                  String fmtdate = DateFormat('E').format(date);
+                  DateTime today = DateTime.now();
+                  String todayfmt = DateFormat('E').format(today);
+                  
                   return Column(
                     children: [
                       Row(
@@ -441,7 +446,8 @@ Widget weekForecastTile(weather2) {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            date,
+                            todayfmt == fmtdate ? 'Today' :
+                            fmtdate,
                             style: GoogleFonts.poppins(
                               fontSize: 20,
                               color: const Color(0xFF666666),
@@ -449,8 +455,8 @@ Widget weekForecastTile(weather2) {
                           ),
                           Image.network(
                             'https:${day.condition.icon}',
-                            width: 55,
-                            height: 55,
+                            width: 50,
+                            height: 50,
                             fit: BoxFit.contain,
                           ),
                           Text(
@@ -492,272 +498,3 @@ Widget weekForecastTile(weather2) {
     ),
   );
 }
-
-
-//  // current day
-//             Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //   children: [
-            //     Text(
-            //       '${weather2.forecast[0].date}',
-            //       style: GoogleFonts.poppins(
-            //         fontSize: 20,
-            //         color: const Color(0xFF666666), 
-            //       ),
-            //     ),
-            //     Image.network(
-            //       'https:${weather2.forecast[0].day.condition.icon}',
-            //       width: 55,
-            //       height: 55,
-            //       fit: BoxFit.contain,
-            //       ),
-            //       Text(
-            //         '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
-            //         style: GoogleFonts.poppins(
-            //         fontSize: 20,
-            //         color: const Color(0xFF666666), 
-            //       ),
-            //     ),
-            //       SizedBox(
-            //   width: 80,
-            //   child:  LinearProgressIndicator(
-            //         value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
-            //         backgroundColor: const Color(0xFFE0E0E0),
-            //         valueColor: const AlwaysStoppedAnimation(Colors.amber),
-            //         ), 
-            //       ),
-          
-            //     Text(
-            //         '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
-            //         style: GoogleFonts.poppins(
-            //         fontSize: 20,
-            //         color: const Color(0xFF666666), 
-            //       ),
-            //     ),
-               
-            //   ],
-            // ),
-            // const Divider(),
-
-//             //Day 1
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: [
-//                 Text(
-//                   '${weather2.forecast[1].day.condition.text}',
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                 Image.network(
-//                   'https:${weather2.forecast[1].day.condition.icon}',
-//                   width: 55,
-//                   height: 55,
-//                   fit: BoxFit.contain,
-//                   ),
-//                   Text(
-//                     '${weather2.forecast[1].day.mintempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                   SizedBox(
-//               width: 80,
-//               child:  LinearProgressIndicator(
-//                     value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
-//                     backgroundColor: const Color(0xFFE0E0E0),
-//                     valueColor: const AlwaysStoppedAnimation(Colors.amber),
-//                     ), 
-//                   ),
-          
-//                 Text(
-//                     '${weather2.forecast[1].day.maxtempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),           
-//               ],
-//             ),
-//             const Divider(),
-
-//             //Day 2
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: [
-//                 Text(
-//                   '${weather2.forecast[2].day.condition.text}',
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                 Image.network(
-//                   'https:${weather2.current.condition.icon}',
-//                   width: 55,
-//                   height: 55,
-//                   fit: BoxFit.contain,
-//                   ),
-//                   Text(
-//                     '${weather2.forecast[2].day.mintempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                   SizedBox(
-//               width: 80,
-//               child:  LinearProgressIndicator(
-//                     value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
-//                     backgroundColor: const Color(0xFFE0E0E0),
-//                     valueColor: const AlwaysStoppedAnimation(Colors.amber),
-//                     ), 
-//                   ),
-          
-//                 Text(
-//                     '${weather2.forecast[2].day.maxtempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),           
-//               ],
-//             ),
-//             const Divider(),
-
-//             //Day 3
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: [
-//                 Text(
-//                   '${weather2.forecast[3].day.condition.text}',
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                 Image.network(
-//                   'https:${weather2.current.condition.icon}',
-//                   width: 55,
-//                   height: 55,
-//                   fit: BoxFit.contain,
-//                   ),
-//                   Text(
-//                     '${weather2.forecast[3].day.mintempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                   SizedBox(
-//               width: 80,
-//               child:  LinearProgressIndicator(
-//                     value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
-//                     backgroundColor: const Color(0xFFE0E0E0),
-//                     valueColor: const AlwaysStoppedAnimation(Colors.amber),
-//                     ), 
-//                   ),
-          
-//                 Text(
-//                     '${weather2.forecast[3].day.maxtempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),           
-//               ],
-//             ),
-//             const Divider(),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: [
-//                 Text(
-//                   '${weather2.forecast[0].day.condition.text}',
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                 Image.network(
-//                   'https:${weather2.current.condition.icon}',
-//                   width: 55,
-//                   height: 55,
-//                   fit: BoxFit.contain,
-//                   ),
-//                   Text(
-//                     '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                   SizedBox(
-//               width: 80,
-//               child:  LinearProgressIndicator(
-//                     value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
-//                     backgroundColor: const Color(0xFFE0E0E0),
-//                     valueColor: const AlwaysStoppedAnimation(Colors.amber),
-//                     ), 
-//                   ),
-          
-//                 Text(
-//                     '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),           
-//               ],
-//             ),
-//             const Divider(),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: [
-//                 Text(
-//                   '${weather2.forecast[0].day.condition.text}',
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                 Image.network(
-//                   'https:${weather2.current.condition.icon}',
-//                   width: 55,
-//                   height: 55,
-//                   fit: BoxFit.contain,
-//                   ),
-//                   Text(
-//                     '${weather2.forecast[0].day.mintempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),
-//                   SizedBox(
-//               width: 80,
-//               child:  LinearProgressIndicator(
-//                     value: (dayAverage/dayHigh)/(dayHigh - dayLow), 
-//                     backgroundColor: const Color(0xFFE0E0E0),
-//                     valueColor: const AlwaysStoppedAnimation(Colors.amber),
-//                     ), 
-//                   ),
-          
-//                 Text(
-//                     '${weather2.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
-//                     style: GoogleFonts.poppins(
-//                     fontSize: 20,
-//                     color: const Color(0xFF666666), 
-//                   ),
-//                 ),           
-//               ],
-//             ),
-//             const Divider(),
-            
