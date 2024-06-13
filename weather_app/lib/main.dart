@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weather_app/pages/onboarding_page.dart';
 import 'pages/weather.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme
           ),
       ),
-      home: const WeatherHome(),
+      home: const OnboardingPage(),
     );
   }
 }
