@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:weather_app/pages/geolocation.dart';
+import 'package:weather_app/main.dart';
+
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -13,11 +14,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 4), (){
+    Future.delayed(const Duration(seconds: 6), (){
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) {
-            return GeolocatorPage();
+            return const WeatherHome();
           },
           )
       );

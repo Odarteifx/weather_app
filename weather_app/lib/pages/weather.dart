@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:weatherapi/weatherapi.dart';
 import 'package:intl/intl.dart';
+import 'package:geolocator/geolocator.dart';
 
 class WeatherUi extends StatefulWidget {
   const WeatherUi({super.key});
@@ -46,14 +47,41 @@ class _WeatherUiState extends State<WeatherUi> {
     super.initState();
     monthnum = now.month - 1;
     day = now.day.toString();
-    fetchWeather();
+    getCurrentLocation();
   }
 
-  Future fetchWeather() async {
+
+  Future getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled){
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied){
+      permission == await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied){
+        return Future.error('Location Permissions are denied.');
+      }
+    }
+    if (permission == LocationPermission.deniedForever){
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    fetchWeatherByLocation(position.latitude, position.longitude);
+  }
+
+
+  Future fetchWeatherByLocation(double latitude, double longitude) async {
     try {
-      final weather = await wr.getRealtimeWeatherByCityName(cityName);
+      final weather = await wr.getRealtimeWeatherByLocation(latitude, longitude);
       final weather2 =
-          await wr.getForecastWeatherByCityName(cityName, forecastDays: 10);
+          await wr.getForecastWeatherByLocation(latitude, longitude, forecastDays: 10);
       setState(() {
         weatherData = weather;
         weatherFore = weather2;
