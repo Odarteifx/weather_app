@@ -113,7 +113,7 @@ class _WeatherUiState extends State<WeatherUi> {
                               const SizedBox(
                                 height: 17,
                               ),
-                              weekForecastTile(weatherFore),
+                              weekForecastTile(weatherData, weatherFore),
                             ],
                           ),
                         )
@@ -130,7 +130,7 @@ class _WeatherUiState extends State<WeatherUi> {
               shape: const CircleBorder(),
               backgroundColor: Colors.black,
               onPressed: () {
-                print({weatherData?.location.lat, weatherData?.location.lon});
+                print({ });
               },
               child: const Icon(
                 Iconsax.menu_14,
@@ -443,7 +443,7 @@ Widget forecastTile(weather, weather2) {
           )));
 }
 
-Widget weekForecastTile(weather2) {
+Widget weekForecastTile(weather, weather2) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 17),
     child: Container(
@@ -491,9 +491,7 @@ Widget weekForecastTile(weather2) {
                   final dateString = weather2.forecast[index].date;
                   final date = DateTime.parse(dateString);
                   final day = weather2.forecast[index].day;
-                  String fmtdate = DateFormat('E').format(date);
-                  DateTime today = DateTime.now();
-                  String todayfmt = DateFormat('E').format(today);
+                  String fmtdate = DateFormat('E').format(date); 
 
                   return Column(
                     children: [
@@ -502,7 +500,7 @@ Widget weekForecastTile(weather2) {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            todayfmt == fmtdate ? 'Today' : fmtdate,
+                            index == 0 ? 'Today' : fmtdate,
                             style: GoogleFonts.poppins(
                               fontSize: 20,
                               color: const Color(0xFF666666),
