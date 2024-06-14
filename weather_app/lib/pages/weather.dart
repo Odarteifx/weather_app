@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:weather_app/pages/search_city.dart';
 import 'package:weatherapi/weatherapi.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
@@ -130,7 +131,12 @@ class _WeatherUiState extends State<WeatherUi> {
               shape: const CircleBorder(),
               backgroundColor: Colors.black,
               onPressed: () {
-                print({ });
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => const SearchCity(),
+                    ) 
+                  );
               },
               child: const Icon(
                 Iconsax.menu_14,
