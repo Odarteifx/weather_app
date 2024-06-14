@@ -35,7 +35,7 @@ class _WeatherUiState extends State<WeatherUi> {
     'd2c2d6e65f574c52b0d224818240606',
       language: Language.english
       );
-  late final String cityName = 'Tokyo';
+  //late final String cityName = 'Tokyo';
 
   RealtimeWeather? weatherData;
   ForecastWeather? weatherFore;
@@ -59,6 +59,7 @@ class _WeatherUiState extends State<WeatherUi> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled){
       return Future.error('Location services are disabled.');
+      
     }
 
     permission = await Geolocator.checkPermission();
@@ -129,7 +130,7 @@ class _WeatherUiState extends State<WeatherUi> {
               shape: const CircleBorder(),
               backgroundColor: Colors.black,
               onPressed: () {
-                
+                print({weatherData?.location.lat, weatherData?.location.lon});
               },
               child: const Icon(
                 Iconsax.menu_14,

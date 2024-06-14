@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:weather_app/main.dart';
+//import 'package:weather_app/main.dart';
+import 'package:weather_app/pages/weather.dart';
 
 
 class OnboardingPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) {
-            return const WeatherHome();
+            return const WeatherUi();
           },
           )
       );
