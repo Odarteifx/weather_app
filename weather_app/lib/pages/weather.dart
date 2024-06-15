@@ -32,10 +32,8 @@ late final int monthnum;
 late final String day;
 
 class _WeatherUiState extends State<WeatherUi> {
-  WeatherRequest wr = WeatherRequest(
-    'd2c2d6e65f574c52b0d224818240606',
-      language: Language.english
-      );
+  WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606',
+      language: Language.english);
   //late final String cityName = 'Tokyo';
 
   RealtimeWeather? weatherData;
@@ -51,39 +49,38 @@ class _WeatherUiState extends State<WeatherUi> {
     getCurrentLocation();
   }
 
-
   Future getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled){
+    if (!serviceEnabled) {
       return Future.error('Location services are disabled.');
-      
     }
 
     permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied){
+    if (permission == LocationPermission.denied) {
       permission == await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied){
+      if (permission == LocationPermission.denied) {
         return Future.error('Location Permissions are denied.');
       }
     }
-    if (permission == LocationPermission.deniedForever){
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     fetchWeatherByLocation(position.latitude, position.longitude);
   }
 
-
   Future fetchWeatherByLocation(double latitude, double longitude) async {
     try {
-      final weather = await wr.getRealtimeWeatherByLocation(latitude, longitude);
-      final weather2 =
-          await wr.getForecastWeatherByLocation(latitude, longitude, forecastDays: 10);
+      final weather =
+          await wr.getRealtimeWeatherByLocation(latitude, longitude);
+      final weather2 = await wr
+          .getForecastWeatherByLocation(latitude, longitude, forecastDays: 10);
       setState(() {
         weatherData = weather;
         weatherFore = weather2;
@@ -124,26 +121,24 @@ class _WeatherUiState extends State<WeatherUi> {
                             style: GoogleFonts.poppins(
                                 fontSize: 20, color: const Color(0xFF828282)),
                           ),
-                        )
-                ),
+                        )),
             ),
-            floatingActionButton: FloatingActionButton(
-              shape: const CircleBorder(),
-              backgroundColor: Colors.black,
-              onPressed: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(
-                    builder: (context) => const SearchCity(),
-                    ) 
-                  );
-              },
-              child: const Icon(
-                Iconsax.menu_14,
-                size: 26,
-                color: Colors.white,
-                ),
-              ),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        backgroundColor: Colors.black,
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SearchCity(),
+              ));
+        },
+        child: const Icon(
+          Iconsax.menu_14,
+          size: 26,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
@@ -161,9 +156,9 @@ Widget weatherTile(weather, weather2) {
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [
             BoxShadow(
-              offset: Offset(0, 1),
-              blurRadius: 1,
-              color: Color.fromRGBO(0, 0, 0, 0.2),
+              offset: Offset(0, 2),
+              blurRadius: 10,
+              color: Color.fromRGBO(0, 0, 0, 0.1),
             )
           ]),
       child: Padding(
@@ -277,9 +272,9 @@ Widget forecastTile(weather, weather2) {
             borderRadius: BorderRadius.circular(20),
             boxShadow: const [
               BoxShadow(
-                offset: Offset(0, 1),
-                blurRadius: 1,
-                color: Color.fromRGBO(0, 0, 0, 0.2),
+                offset: Offset(0, 2),
+                blurRadius: 10,
+                color: Color.fromRGBO(0, 0, 0, 0.1),
               )
             ],
           ),
@@ -459,9 +454,9 @@ Widget weekForecastTile(weather, weather2) {
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
-            offset: Offset(0, 1),
-            blurRadius: 1,
-            color: Color.fromRGBO(0, 0, 0, 0.2),
+            offset: Offset(0, 2),
+            blurRadius: 10,
+            color: Color.fromRGBO(0, 0, 0, 0.1),
           )
         ],
       ),
@@ -477,9 +472,11 @@ Widget weekForecastTile(weather, weather2) {
                 const Icon(
                   Iconsax.calendar_1,
                   size: 23,
-                  color:  Color(0xFF666666),
-                  ),
-                  const SizedBox(width: 5,),
+                  color: Color(0xFF666666),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
                 Text(
                   '10-Day Forecast',
                   style: GoogleFonts.poppins(
@@ -497,7 +494,7 @@ Widget weekForecastTile(weather, weather2) {
                   final dateString = weather2.forecast[index].date;
                   final date = DateTime.parse(dateString);
                   final day = weather2.forecast[index].day;
-                  String fmtdate = DateFormat('E').format(date); 
+                  String fmtdate = DateFormat('E').format(date);
 
                   return Column(
                     children: [
