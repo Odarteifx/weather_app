@@ -13,7 +13,7 @@ class SearchCity extends StatefulWidget {
 class _SearchCityState extends State<SearchCity> {
   WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606');
   final TextEditingController _controller = TextEditingController();
-  String cityName = 'Parma';
+  String cityName = '';
   dynamic weatherData;
   String errorMessage = '';
 
@@ -51,9 +51,14 @@ class _SearchCityState extends State<SearchCity> {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
-            seaechArea(_controller),
+            seaechArea(_controller, (value){
+              setState(() {
+                cityName = value;
+              });
+              searchCity();
+            }),
             searchCityTile(cityName),
-             searchCityTile(cityName),
+             //searchCityTile(cityName),
           ],
         ),
       )),
@@ -61,7 +66,7 @@ class _SearchCityState extends State<SearchCity> {
   }
 }
 
-Widget seaechArea(controller) {
+Widget seaechArea(controller, Function (String) onfieldSubmitted) {
   return Stack(children: [
     Container(
       height: 55,
@@ -94,6 +99,7 @@ Widget seaechArea(controller) {
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.all(Radius.circular(20))),
         ),
+        onFieldSubmitted: onfieldSubmitted,
       ),
     ),
   ]);
@@ -168,4 +174,13 @@ Widget searchCityTile(cityName) {
       ),
     ),
   );
+}
+
+
+Widget searchListTile(cityName){
+  return ListView.builder(
+    itemBuilder: (context, index) {
+      return searchCityTile(cityName);
+    },
+    );
 }
