@@ -28,6 +28,7 @@ class _SearchCityState extends State<SearchCity> {
       final SearchResults sr = await wr.getResultsByCityName(cityName);
       setState(() {
         weatherData = sr;
+        citySearch = [sr];
       });
     } catch (e) {
       setState(() {
@@ -57,8 +58,17 @@ class _SearchCityState extends State<SearchCity> {
               });
               searchCity();
             }),
-            searchCityTile(cityName),
-             //searchCityTile(cityName),
+            Expanded(
+              child: citySearch.isEmpty ? 
+               Center(
+                child: Text(errorMessage.isNotEmpty ? errorMessage : 'No results')
+              ) : 
+              ListView.builder(
+                itemBuilder: (context, index) {
+                  return searchCityTile(citySearch[index]);
+                },
+                )
+              ) 
           ],
         ),
       )),
@@ -105,7 +115,7 @@ Widget seaechArea(controller, Function (String) onfieldSubmitted) {
   ]);
 }
 
-Widget searchCityTile(cityName) {
+Widget searchCityTile(SearchResults city) {
   return Padding(
     padding: const EdgeInsets.only(top: 16),
     child: Container(
@@ -133,7 +143,7 @@ Widget searchCityTile(cityName) {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  cityName,
+                  city.locations.toString(),
                   style: GoogleFonts.poppins(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
