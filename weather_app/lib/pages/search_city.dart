@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:weatherapi/weatherapi.dart';
 
+import 'weather.dart';
+
 class SearchCity extends StatefulWidget {
   const SearchCity({super.key});
 
@@ -11,11 +13,13 @@ class SearchCity extends StatefulWidget {
 }
 
 class _SearchCityState extends State<SearchCity> {
+
   WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606');
   final TextEditingController _controller = TextEditingController();
   String cityName = '';
   dynamic weatherData;
   String errorMessage = '';
+  dynamic weatherFore;
 
   List citySearch = [];
 
@@ -25,10 +29,12 @@ class _SearchCityState extends State<SearchCity> {
     });
 
     try {
-      final SearchResults sr = await wr.getResultsByCityName(cityName);
+      final RealtimeWeather rw = await wr.getRealtimeWeatherByCityName(cityName);
+      final ForecastWeather fw = await wr.getForecastWeatherByCityName(cityName);
       setState(() {
-        weatherData = sr;
-        citySearch = [sr];
+        weatherData = rw;
+        weatherFore = fw;
+        citySearch = [rw];
       });
     } catch (e) {
       setState(() {
@@ -52,7 +58,7 @@ class _SearchCityState extends State<SearchCity> {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
-            seaechArea(_controller, (value){
+            searchBar(_controller, (value){
               setState(() {
                 cityName = value;
               });
@@ -64,8 +70,8 @@ class _SearchCityState extends State<SearchCity> {
                 child: Text(errorMessage.isNotEmpty ? errorMessage : 'No results')
               ) : 
               ListView.builder(
-                itemBuilder: (context, index) {
-                  return searchCityTile(citySearch[index]);
+                itemBuilder: (context, index,) {
+                  return searchCityTile(citySearch[index], citySearch[index]);
                 },
                 )
               ) 
@@ -76,7 +82,7 @@ class _SearchCityState extends State<SearchCity> {
   }
 }
 
-Widget seaechArea(controller, Function (String) onfieldSubmitted) {
+Widget searchBar(controller, Function (String) onfieldSubmitted) {
   return Stack(children: [
     Container(
       height: 55,
@@ -115,7 +121,7 @@ Widget seaechArea(controller, Function (String) onfieldSubmitted) {
   ]);
 }
 
-Widget searchCityTile(city) {
+Widget searchCityTile(city, fw) {
   return Padding(
     padding: const EdgeInsets.only(top: 16),
     child: Container(
@@ -143,21 +149,21 @@ Widget searchCityTile(city) {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  city.locations[0].name,
+                  city.location.name,
                   style: GoogleFonts.poppins(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
                   ),
                 Text(
-                  'Jun 7 | ${city.locations[0].country}',
+                  '${month[monthnum]} $day  | ${city.current.condition.text}',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     color: const Color(0xFF828282),
                   ),
                   ),
                 Text(
-                  'H:12° L:10°',
+                  'H:${fw.forecast[0].day.mintempC.toStringAsFixed(0)}°',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     color: const Color(0xFF828282),
@@ -169,9 +175,9 @@ Widget searchCityTile(city) {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const FlutterLogo(size: 70),
+                Image.network('https:${city.current.condition.icon}'),
                 Text(
-                  '14°',
+                  '${city.current.tempC.toStringAsFixed(0)}°',
                   style: GoogleFonts.poppins(
                     fontSize: 35,
                     fontWeight: FontWeight.w500
@@ -187,10 +193,10 @@ Widget searchCityTile(city) {
 }
 
 
-Widget searchListTile(cityName){
+Widget searchListTile(cityName, fw){
   return ListView.builder(
     itemBuilder: (context, index) {
-      return searchCityTile(cityName);
+      return searchCityTile(cityName, fw);
     },
     );
 }
