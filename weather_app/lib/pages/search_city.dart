@@ -29,12 +29,10 @@ class _SearchCityState extends State<SearchCity> {
     });
 
     try {
-      final RealtimeWeather rw = await wr.getRealtimeWeatherByCityName(cityName);
       final ForecastWeather fw = await wr.getForecastWeatherByCityName(cityName);
       setState(() {
-        weatherData = rw;
-        weatherFore = fw;
-        citySearch = [rw];
+        weatherData = fw;
+        citySearch = [fw];
       });
     } catch (e) {
       setState(() {
@@ -70,8 +68,8 @@ class _SearchCityState extends State<SearchCity> {
                 child: Text(errorMessage.isNotEmpty ? errorMessage : 'No results')
               ) : 
               ListView.builder(
-                itemBuilder: (context, index,) {
-                  return searchCityTile(citySearch[index], citySearch[index]);
+                itemBuilder: (context, index) {
+                  return searchCityTile(citySearch[index]);
                 },
                 )
               ) 
@@ -121,7 +119,7 @@ Widget searchBar(controller, Function (String) onfieldSubmitted) {
   ]);
 }
 
-Widget searchCityTile(city, fw) {
+Widget searchCityTile(city) {
   return Padding(
     padding: const EdgeInsets.only(top: 16),
     child: Container(
@@ -162,13 +160,27 @@ Widget searchCityTile(city, fw) {
                     color: const Color(0xFF828282),
                   ),
                   ),
-                Text(
-                  'H:${fw.forecast[0].day.mintempC.toStringAsFixed(0)}°',
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: const Color(0xFF828282),
-                  ),
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      'H:${city.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        color: const Color(0xFF828282),
+                      ),
+                      ),
+
+                      const SizedBox(width:10,),
+
+                      Text(
+                      'L:${city.forecast[0].day.mintempC.toStringAsFixed(0)}°',
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        color: const Color(0xFF828282),
+                      ),
+                      ),
+                  ],
+                ),
               ],
             ),
             Column(
@@ -193,10 +205,10 @@ Widget searchCityTile(city, fw) {
 }
 
 
-Widget searchListTile(cityName, fw){
+Widget searchListTile(cityName){
   return ListView.builder(
     itemBuilder: (context, index) {
-      return searchCityTile(cityName, fw);
+      return searchCityTile(cityName);
     },
     );
 }
