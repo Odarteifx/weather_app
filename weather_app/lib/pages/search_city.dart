@@ -12,7 +12,6 @@ class SearchCity extends StatefulWidget {
 }
 
 class _SearchCityState extends State<SearchCity> {
-
   WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606');
   final TextEditingController _controller = TextEditingController();
   String cityName = '';
@@ -28,7 +27,8 @@ class _SearchCityState extends State<SearchCity> {
     });
 
     try {
-      final ForecastWeather fw = await wr.getForecastWeatherByCityName(cityName);
+      final ForecastWeather fw =
+          await wr.getForecastWeatherByCityName(cityName);
       setState(() {
         weatherData = fw;
         citySearch.add(fw);
@@ -55,23 +55,26 @@ class _SearchCityState extends State<SearchCity> {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
-            searchBar(_controller, (value){
+            searchBar(_controller, (value) {
               setState(() {
                 cityName = value;
               });
               searchCity();
             }),
             Expanded(
-              child: citySearch.isEmpty ? 
-               Center(
-                child: Text(errorMessage.isNotEmpty ? errorMessage : 'No results')
-              ) : 
-              ListView.builder(
-                itemBuilder: (context, index) {
-                  return searchCityTile(citySearch[index]);
-                },
-                )
-              ) 
+                child: citySearch.isEmpty
+                    ? Center(
+                        child: Text(
+                          errorMessage.isNotEmpty ? errorMessage : 'No results',
+                          style: GoogleFonts.poppins(
+                              fontSize: 20, color: const Color(0xFF828282)),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemBuilder: (context, index) {
+                          return searchCityTile(citySearch[index]);
+                        },
+                      ))
           ],
         ),
       )),
@@ -79,7 +82,7 @@ class _SearchCityState extends State<SearchCity> {
   }
 }
 
-Widget searchBar(controller, Function (String) onfieldSubmitted) {
+Widget searchBar(controller, Function(String) onfieldSubmitted) {
   return Stack(children: [
     Container(
       height: 55,
@@ -124,24 +127,23 @@ Widget searchCityTile(city) {
     child: Container(
       height: 170,
       decoration: BoxDecoration(
-        color: Colors.white, 
-      boxShadow: const[
-        BoxShadow(
-          offset: Offset(0, 2),
-          blurRadius: 10,
-          spreadRadius: 1,
-          color:  Color.fromRGBO(0, 0, 0, 0.1),
-        )
-      ],
-      borderRadius: BorderRadius.circular(20)
-      ),
+          color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(0, 2),
+              blurRadius: 10,
+              spreadRadius: 1,
+              color: Color.fromRGBO(0, 0, 0, 0.1),
+            )
+          ],
+          borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-             Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -151,14 +153,14 @@ Widget searchCityTile(city) {
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
-                  ),
+                ),
                 Text(
                   '${month[monthnum]} $day  | ${city.current.condition.text}',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     color: const Color(0xFF828282),
                   ),
-                  ),
+                ),
                 Row(
                   children: [
                     Text(
@@ -167,17 +169,17 @@ Widget searchCityTile(city) {
                         fontSize: 16,
                         color: const Color(0xFF828282),
                       ),
-                      ),
-
-                      const SizedBox(width:10,),
-
-                      Text(
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
                       'L:${city.forecast[0].day.mintempC.toStringAsFixed(0)}°',
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         color: const Color(0xFF828282),
                       ),
-                      ),
+                    ),
                   ],
                 ),
               ],
@@ -190,10 +192,8 @@ Widget searchCityTile(city) {
                 Text(
                   '${city.current.tempC.toStringAsFixed(0)}°',
                   style: GoogleFonts.poppins(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w500
-                  ),
-                  )
+                      fontSize: 35, fontWeight: FontWeight.w500),
+                )
               ],
             )
           ],
@@ -203,11 +203,10 @@ Widget searchCityTile(city) {
   );
 }
 
-
-Widget searchListTile(cityName){
+Widget searchListTile(cityName) {
   return ListView.builder(
     itemBuilder: (context, index) {
       return searchCityTile(cityName);
     },
-    );
+  );
 }
