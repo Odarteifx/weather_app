@@ -115,7 +115,7 @@ Widget seaechArea(controller, Function (String) onfieldSubmitted) {
   ]);
 }
 
-Widget searchCityTile(SearchResults city) {
+Widget searchCityTile(city) {
   return Padding(
     padding: const EdgeInsets.only(top: 16),
     child: Container(
@@ -143,14 +143,14 @@ Widget searchCityTile(SearchResults city) {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  city.locations.toString(),
+                  city.locations[0].name,
                   style: GoogleFonts.poppins(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
                   ),
                 Text(
-                  'Jun 7 | Clear',
+                  'Jun 7 | ${city.locations[0].country}',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     color: const Color(0xFF828282),
