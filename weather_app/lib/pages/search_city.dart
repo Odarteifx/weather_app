@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:weatherapi/weatherapi.dart';
-
 import 'weather.dart';
 
 class SearchCity extends StatefulWidget {
@@ -32,7 +31,7 @@ class _SearchCityState extends State<SearchCity> {
       final ForecastWeather fw = await wr.getForecastWeatherByCityName(cityName);
       setState(() {
         weatherData = fw;
-        citySearch = [fw];
+        citySearch.add(fw);
       });
     } catch (e) {
       setState(() {
