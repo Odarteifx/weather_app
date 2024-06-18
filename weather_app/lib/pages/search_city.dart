@@ -55,6 +55,7 @@ class _SearchCityState extends State<SearchCity> {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
+            SizedBox(height: 10,), //remove from there
             searchBar(_controller, (value) {
               setState(() {
                 cityName = value;
