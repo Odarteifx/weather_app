@@ -14,7 +14,7 @@ class SearchCity extends StatefulWidget {
 class _SearchCityState extends State<SearchCity> {
   WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606');
   final TextEditingController _controller = TextEditingController();
-  String cityName = '';
+  String cityName ='';
   dynamic weatherData;
   String errorMessage = '';
   dynamic weatherFore;
@@ -74,10 +74,44 @@ class _SearchCityState extends State<SearchCity> {
                       itemCount: citySearch.length,
                         itemBuilder: (context, index) {
                           return Dismissible(
-                            onDismissed: (direction) {
-                              citySearch.removeAt(index);
-                            },
                             key: Key(citySearch[index].location.name),
+                            onDismissed: (direction) {
+                              String dismissedCity = citySearch[index].location.name; 
+                              setState(() {
+                                 citySearch.removeAt(index);
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: const Color(0xFF828282),
+                                  content: Center(
+                                    child: Text(
+                                      '$dismissedCity has been dismissed',
+                                      ),
+                                  )
+                                  )
+                                  );
+                            },
+                            background: Padding(
+                              padding: const EdgeInsets.only(top:17),
+                              child: Container(
+                                height: 170,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[40],
+                                  borderRadius: BorderRadius.circular(20)
+                                ),
+                                child: const Row(
+                                  children: [
+                                    Spacer(),
+                                     Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                      size: 40,
+                                      ),
+                                    SizedBox(width: 50,)
+                                  ],
+                                )
+                              ),
+                            ),
                             child: searchCityTile(citySearch[index])
                             );
                         },
