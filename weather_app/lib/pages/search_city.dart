@@ -54,8 +54,7 @@ class _SearchCityState extends State<SearchCity> {
           child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
-          children: [
-            SizedBox(height: 10,), //remove from there
+          children: [ 
             searchBar(_controller, (value) {
               setState(() {
                 cityName = value;
@@ -72,8 +71,15 @@ class _SearchCityState extends State<SearchCity> {
                         ),
                       )
                     : ListView.builder(
+                      itemCount: citySearch.length,
                         itemBuilder: (context, index) {
-                          return searchCityTile(citySearch[index]);
+                          return Dismissible(
+                            onDismissed: (direction) {
+                              citySearch.removeAt(index);
+                            },
+                            key: Key(citySearch[index].location.name),
+                            child: searchCityTile(citySearch[index])
+                            );
                         },
                       ))
           ],
