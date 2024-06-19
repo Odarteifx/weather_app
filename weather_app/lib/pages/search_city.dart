@@ -30,12 +30,44 @@ class _SearchCityState extends State<SearchCity> {
       final ForecastWeather fw =
           await wr.getForecastWeatherByCityName(cityName);
       setState(() {
-        weatherData = fw;
-        citySearch.add(fw);
-      });
+       
+
+        bool isCityAlreadyAdded = citySearch.any((city) => city.location.name.toLowerCase() == fw.location.name!.toLowerCase());
+
+          if (isCityAlreadyAdded) {
+            setState(() {
+               ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                   backgroundColor: Color(0xFF828282),
+                  content: Center(
+                    child: Text(
+                      'City Already Added',
+
+                      )
+                    )
+                  )
+               );
+            });
+          } else {
+            setState(() {
+               weatherData = fw;
+               citySearch.add(fw);
+            });
+          }
+    });
     } catch (e) {
       setState(() {
-        errorMessage = 'City not found or error occurred. Please try again.';
+       ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                   backgroundColor: Color(0xFF828282),
+                  content: Center(
+                    child: Text(
+                      'City not found or error occurred. Please try again.',
+
+                      )
+                    )
+                  )
+      );
       });
     }
   }
