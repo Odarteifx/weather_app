@@ -14,7 +14,7 @@ class SearchCity extends StatefulWidget {
 class _SearchCityState extends State<SearchCity> {
   WeatherRequest wr = WeatherRequest('d2c2d6e65f574c52b0d224818240606');
   final TextEditingController _controller = TextEditingController();
-  String cityName ='';
+  String cityName = '';
   dynamic weatherData;
   String errorMessage = '';
   dynamic weatherFore;
@@ -30,44 +30,34 @@ class _SearchCityState extends State<SearchCity> {
       final ForecastWeather fw =
           await wr.getForecastWeatherByCityName(cityName);
       setState(() {
-       
+        bool isCityAlreadyAdded = citySearch.any((city) =>
+            city.location.name.toLowerCase() ==
+            fw.location.name!.toLowerCase());
 
-        bool isCityAlreadyAdded = citySearch.any((city) => city.location.name.toLowerCase() == fw.location.name!.toLowerCase());
-
-          if (isCityAlreadyAdded) {
-            setState(() {
-               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                   backgroundColor: Color(0xFF828282),
-                  content: Center(
+        if (isCityAlreadyAdded) {
+          setState(() {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                backgroundColor: Color(0xFF828282),
+                content: Center(
                     child: Text(
-                      'City Already Added',
-
-                      )
-                    )
-                  )
-               );
-            });
-          } else {
-            setState(() {
-               weatherData = fw;
-               citySearch.add(fw);
-            });
-          }
-    });
+                  'City Already Added',
+                ))));
+          });
+        } else {
+          setState(() {
+            weatherData = fw;
+            citySearch.add(fw);
+          });
+        }
+      });
     } catch (e) {
       setState(() {
-       ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                   backgroundColor: Color(0xFF828282),
-                  content: Center(
-                    child: Text(
-                      'City not found or error occurred. Please try again.',
-
-                      )
-                    )
-                  )
-      );
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Color(0xFF828282),
+            content: Center(
+                child: Text(
+              'City not found or error occurred. Please try again.',
+            ))));
       });
     }
   }
@@ -86,7 +76,7 @@ class _SearchCityState extends State<SearchCity> {
           child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
-          children: [ 
+          children: [
             searchBar(_controller, (value) {
               setState(() {
                 cityName = value;
@@ -103,49 +93,49 @@ class _SearchCityState extends State<SearchCity> {
                         ),
                       )
                     : ListView.builder(
-                      itemCount: citySearch.length,
+                        itemCount: citySearch.length,
                         itemBuilder: (context, index) {
                           return Dismissible(
-                            key: Key(citySearch[index].location.name),
-                            onDismissed: (direction) {
-                              String dismissedCity = citySearch[index].location.name; 
-                              setState(() {
-                                 citySearch.removeAt(index);
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: const Color(0xFF828282),
-                                  content: Center(
-                                    child: Text(
-                                      '$dismissedCity has been dismissed',
-                                      ),
-                                  )
-                                  )
-                                  );
-                            },
-                            background: Padding(
-                              padding: const EdgeInsets.only(top:17),
-                              child: Container(
-                                height: 170,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[40],
-                                  borderRadius: BorderRadius.circular(20)
-                                ),
-                                child: const Row(
-                                  children: [
-                                    Spacer(),
-                                     Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                      size: 40,
-                                      ),
-                                    SizedBox(width: 50,)
-                                  ],
-                                )
+                              key: Key(citySearch[index].location.name),
+                              onDismissed: (direction) {
+                                String dismissedCity =
+                                    citySearch[index].location.name;
+                                setState(() {
+                                  citySearch.removeAt(index);
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor:
+                                            const Color(0xFF828282),
+                                        content: Center(
+                                          child: Text(
+                                            '$dismissedCity has been dismissed',
+                                          ),
+                                        )));
+                              },
+                              background: Padding(
+                                padding: const EdgeInsets.only(top: 17),
+                                child: Container(
+                                    height: 170,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[40],
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: const Row(
+                                      children: [
+                                        Spacer(),
+                                        Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                          size: 40,
+                                        ),
+                                        SizedBox(
+                                          width: 50,
+                                        )
+                                      ],
+                                    )),
                               ),
-                            ),
-                            child: searchCityTile(citySearch[index])
-                            );
+                              child: searchCityTile(citySearch[index]));
                         },
                       ))
           ],
