@@ -1,16 +1,21 @@
-# weather_app
+# Weather App
 
-A new Flutter project.
+A Flutter weather app that provides real-time weather updates and forecasts using the Geolocator API for location services and WeatherAPI for weather data.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Real-time weather updates
+- 10-day weather forecast
+- Current temperature
+- Location-based weather data using GPS
+- Search for weather information of any city
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Onboarding Screen](assets/onboadingpage.png)
+![Home Screen](assets/weathermain.png)
+![Search Screen](assets/searchpage.png)
+![Search City Added](assets/Addedsearchcity.png)
+![City Ondismiss](assets/ondismiss.png)
+![City Dismissed](assets/ondismiss.png)
+![City Notfound](assets/notfound.png)
