@@ -187,6 +187,7 @@ Widget searchBar(controller, Function(String) onfieldSubmitted) {
 }
 
 Widget searchCityTile(city) {
+  String cityData = '${month[monthnum]} $day  | ${city.current.condition.text}';
   return Padding(
     padding: const EdgeInsets.only(top: 16),
     child: Container(
@@ -208,46 +209,49 @@ Widget searchCityTile(city) {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  city.location.name,
-                  style: GoogleFonts.poppins(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    city.location.name,
+                    style: GoogleFonts.poppins(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  '${month[monthnum]} $day  | ${city.current.condition.text}',
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: const Color(0xFF828282),
+                  Text(
+                    cityData,
+                    softWrap: true,
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      color: const Color(0xFF828282),
+                    ),
                   ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'H:${city.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        color: const Color(0xFF828282),
+                  Row(
+                    children: [
+                      Text(
+                        'H:${city.forecast[0].day.maxtempC.toStringAsFixed(0)}°',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: const Color(0xFF828282),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'L:${city.forecast[0].day.mintempC.toStringAsFixed(0)}°',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        color: const Color(0xFF828282),
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      Text(
+                        'L:${city.forecast[0].day.mintempC.toStringAsFixed(0)}°',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: const Color(0xFF828282),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
