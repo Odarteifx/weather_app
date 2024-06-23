@@ -73,8 +73,10 @@ class _SearchCityState extends State<SearchCity> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
+        top: true,
+        bottom: false,
           child: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
             searchBar(_controller, (value) {
